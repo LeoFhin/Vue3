@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="product-display">
+            <div class="product-contain">
+                <div class="product-image">
+                    <img :src="imagem" :alt="descricaoDoProduto">
+                </div>
+                <div class="product-info">
+                    <h1>kit vonixx</h1>
+                    <p v-if="Stock > 10" > Em estoque</p>
+                    <p v-else-if="Stock < 10 && Stock > 1">Ultimas Unidades</p>
+                    <p v-else>Sem estoque</p>
+                </div>
+            </div>
+        </div>        
+
+        
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+    
+        createApp({
+            setup() {
+            const message = ref('Hello World!')
+            return {
+                message,
+                imagem: ref("assets/imagens/kit vonix.jpg"),
+                descricaoDoProduto: ref ('Produto'),
+                Stock: ref(0)
+            }
+            }
+        }).mount('#app')
+        </script>
+</body>
+</html>
