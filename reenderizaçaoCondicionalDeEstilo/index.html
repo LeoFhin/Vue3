@@ -20,19 +20,19 @@
                 </div>
                 <div class="product-info">
                     <h1>T- Shirt</h1>
-                    <p v-if="Stock > 10" > Em estoque</p>
-                    <p v-else-if="Stock < 10 && Stock > 1">Ultimas Unidades</p>
+                    <p v-if="inStock > 10" > Em estoque</p>
+                    <p v-else-if="inStock < 10 && inStock > 1">Ultimas Unidades</p>
                     <p v-else>Sem estoque</p>
                     <ul>
                         <li v-for="detail in details">
                             {{detail}}
                         </li>
                     </ul>
-                    <div v-for="variant in variants" :key="variant.id" @mouseover="changeImage(variant.image)">
-                        {{variant.color}}
+                    <div v-for="variant in variants" :key="variant.id" @mouseover="changeImage(variant.image)" class="color-circle" :style="{backgroundColor: variant.color}">
+                        
                     </div>
 
-                <button class="button" v-on:click="addToCart">Adicionar ao Carrinho</button>
+                <button class="button" :class="{disableButton : inStock < 1}" @click="addToCart" :disabled="inStock < 1">Add to cart</button>
                 </div>
             </div>
         </div>        
@@ -59,7 +59,7 @@
             return {
                 image,
                 descricaoDoProduto: ref ('Produto'),
-                Stock: ref(90),
+                inStock: ref(0),
                 details: ['V-Flock', 'Sinta', 'Retaurax'],
                 variants: [
                     {id:1, color: 'blue', image:"assets/imagens/t-shirt-blue.png"}, 
