@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div id="app">
+
+        <div class="cart">Carrinho: {{cart}}</div>
+
+        <div class="product-display">
+            <div class="product-contain">
+                <div class="product-image">
+                    <img :src="image" :alt="descricaoDoProduto">
+                </div>
+                <div class="product-info">
+                    <h1>kit vonixx</h1>
+                    <p v-if="Stock > 10" > Em estoque</p>
+                    <p v-else-if="Stock < 10 && Stock > 1">Ultimas Unidades</p>
+                    <p v-else>Sem estoque</p>
+                    <ul>
+                        <li v-for="detail in details">
+                            {{detail}}
+                        </li>
+                    </ul>
+                    <div v-for="variant in variants" :key="variant.id" @mouseover="changeImage(variant.image)">
+                        {{variant.color}}
+                    </div>
+
+                <button class="button" v-on:click="addToCart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>        
+
+        
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+    
+        createApp({
+            setup() {
+            
+            const cart = ref(0);
+            const addToCart = () =>{
+                cart.value +=1
+            }
+
+            const image = ref("assets/imagens/kit vonix.jpg")
+            const changeImage = (variantImage) => {
+                image.value = variantImage
+            }
+
+            return {
+                image,
+                descricaoDoProduto: ref ('Produto'),
+                Stock: ref(90),
+                details: ['V-Flock', 'Sinta', 'Retaurax'],
+                variants: [
+                    {id:1, color: 'blue', image:"assets/imagens/t-shirt-blue.png"}, 
+                    {id:2, color: 'green', image:"assets/imagens/t-shirt-green.png"}],
+                cart,
+                addToCart,
+                changeImage
+                
+            }
+            }
+        }).mount('#app')
+        </script>
+</body>
+</html>
